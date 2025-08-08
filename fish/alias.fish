@@ -1,1 +1,5 @@
-alias vi nvim
+alias vi="nvim"
+alias agent="eval \$(ssh-agent -c); ssh-add ~/.ssh/github"
+alias wmi="curl ifconfig.co"
+alias top="glances"
+alias calc="galculator"
