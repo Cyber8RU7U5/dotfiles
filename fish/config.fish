@@ -4,5 +4,8 @@ if status is-interactive
     source ~/.config/fish/alias.fish
 end
 
+set -x CARGO_HOME ~/.cargo
+set -x RUSTUP_HOME ~/.rustup
+
 # Created by `pipx` on 2025-07-25 15:24:13
 set PATH $PATH /home/user/.local/bin
