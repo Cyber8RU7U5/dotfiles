@@ -1,0 +1,16 @@
+lines=8
+gtk_dark=true
+hide_scroll=true
+insensitive=true
+location=2
+matching=fuzzy
+mode=true
+prompt=
+term=kitty
+width=20%
+yoffset=60
+xoffset=0
+line_wrap=word
+single_click=true
+filter_rate=100
+style=style.css
