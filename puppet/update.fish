@@ -8,4 +8,4 @@ echo "Copying to ~/.config"
 cp -r /tmp/dotfiles/* ~/.config
 echo "Removing temporary folder"
 rm -rf /tmp/dotfiles
-echo -e "-----------------------------------------------\n Done updating! Please relog or reboot \n-----------------------------------------------\n"
+echo -e "\n-----------------------------------------------\n Done updating! Please relog or reboot \n-----------------------------------------------\n"
