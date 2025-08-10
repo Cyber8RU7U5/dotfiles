@@ -1,0 +1,14 @@
+(defwindow puppetbar
+           :monitor 0
+           :geometry (geometry :x "0px"
+                               :y "0px"
+                               :width "100%"
+                               :height "20px"
+                               :anchor "top center")
+           :stacking "fg"
+           :reserve (struts :distance "0px" :side "top")
+           :windowtype "dock"
+           :wm-ignore false
+           :exclusive true
+           :focusable "ondemand"
+  "PUPPET")
