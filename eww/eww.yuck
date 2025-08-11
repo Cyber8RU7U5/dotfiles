@@ -51,7 +51,7 @@
     (for ws in workspaces
       (button
         :class { "ws " + (ws.id == current_workspace ? "active" : "") }
-        :tooltip {ws.lastwindowtitle ?? ""}
+        :tooltip {ws.lastwindowtitle}
         :onclick `hyprctl dispatch workspace ${ws.id}`
         {ws.id}))))
 
