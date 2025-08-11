@@ -1,14 +1,130 @@
-(defwindow puppetbar
-           :monitor 0
-           :geometry (geometry :x "0px"
-                               :y "0px"
-                               :width "100%"
-                               :height "20px"
-                               :anchor "top center")
-           :stacking "fg"
-           :reserve (struts :distance "0px" :side "top")
-           :windowtype "dock"
-           :wm-ignore false
-           :exclusive true
-           :focusable "ondemand"
-  "PUPPET")
+;; =========================
+;; DATA SOURCES (poll/listen)
+;; =========================
+(defpoll time_text :interval "1s" "date '+%H:%M'")
+(defpoll date_text :interval "30s" "date '+%a %d %b'")
+
+(defpoll active_ws :interval "1s" "bash ~/.config/eww/scripts/workspace_active.sh")
+(defpoll media_or_title :interval "1s" "bash ~/.config/eww/scripts/media_or_title.sh")
+
+(deflisten cpu_vals "bash ~/.config/eww/scripts/cpu_stream.sh")
+(deflisten mem_vals "bash ~/.config/eww/scripts/mem_stream.sh")
+
+;; Up/Down bandwidth (kbps) history, space-separated 60 samples each second
+(deflisten net_up_vals   "bash ~/.config/eww/scripts/net_stream.sh up values")
+(deflisten net_up_max    "bash ~/.config/eww/scripts/net_stream.sh up max")
+(deflisten net_down_vals "bash ~/.config/eww/scripts/net_stream.sh down values")
+(deflisten net_down_max  "bash ~/.config/eww/scripts/net_stream.sh down max")
+
+
+
+(defpoll battery_pct   :interval "15s" "bash ~/.config/eww/scripts/battery.sh")
+(defpoll wifi_status   :interval "3s"  "bash ~/.config/eww/scripts/nm_wifi.sh")
+(defpoll bt_status     :interval "3s"  "bash ~/.config/eww/scripts/bluetooth.sh")
+(defpoll vpn_status    :interval "3s"  "bash ~/.config/eww/scripts/vpn.sh")
+
+;; UI state
+(defvar show_powermenu false)
+
+;; =========================
+;; REUSABLE WIDGETS
+;; =========================
+(defwidget icon-btn [icon tooltip onleft onright class]
+  (button :class (str "icon-btn " class)
+          :onclick onleft
+          :onrightclick onright
+          :tooltip tooltip
+          (label :text icon)))
+
+(defwidget graph60 [vals min max w]
+  (graph :class "spark"
+         :values vals
+         :min min :max max
+         :width w :height 24
+         :line-width 2))
+
+(defwidget workspaces []
+  (box :class "workspaces" :spacing 6
+    (for i in (range 1 6)
+      (button :class (str "ws " (if (= i active_ws) "active" ""))
+              :onclick (str "hyprctl dispatch workspace " i)
+              (label :text (str i))))))
+
+(defwidget left-block []
+  (box :halign "start" :valign "center" :spacing 12
+    (button :class "logo"
+            :onclick "wofi --show drun"
+            (image :path "~/.config/media/orobas-logo.png" :height 20))
+    (label :class "nowplaying"
+           :text media_or_title
+           :tooltip date_text)))
+
+(defwidget center-block []
+  (box :halign "center" :valign "center" (workspaces)))
+
+(defwidget right-block []
+  (box :halign "end" :valign "center" :spacing 10
+    ;; Right-to-left visual order (define rightmost last)
+    ;; Power
+    (icon-btn :icon "⏻" :tooltip "Power" :class "power"
+              :onleft "eww update show_powermenu=true"
+              :onright "")
+    ;; Wi-Fi
+    (icon-btn :icon wifi_status :tooltip "Wi-Fi (LMB toggle, RMB editor)"
+              :onleft "bash ~/.config/eww/scripts/nm_wifi.sh toggle"
+              :onright "nm-connection-editor"
+              :class "wifi")
+    ;; Bluetooth
+    (icon-btn :icon bt_status :tooltip "Bluetooth (LMB toggle, RMB manager)"
+              :onleft "bash ~/.config/eww/scripts/bluetooth.sh toggle"
+              :onright "blueman-manager"
+              :class "bt")
+    ;; VPN
+    (icon-btn :icon vpn_status :tooltip "VPN (LMB toggle default, RMB list)"
+              :onleft "bash ~/.config/eww/scripts/vpn.sh toggle"
+              :onright "bash ~/.config/eww/scripts/vpn.sh menu"
+              :class "vpn")
+    ;; Battery
+    (label :class "battery" :text (str battery_pct \"%\") :tooltip "Battery")
+
+    ;; Graphs (60s)
+    (box :class "graphs" :spacing 8
+      (box :class "g" (graph60 :vals cpu_vals :min 0 :max 100 :w 80) (label :class "g-lbl" :text "CPU"))
+      (box :class "g" (graph60 :vals mem_vals :min 0 :max 100 :w 80) (label :class "g-lbl" :text "MEM"))
+(box :class "g" (graph60 :vals net_up_vals   :min 10000 :max net_up_max   :w 90) (label :class "g-lbl" :text "UP"))
+(box :class "g" (graph60 :vals net_down_vals :min 10000 :max net_down_max :w 90) (label :class "g-lbl" :text "DOWN"))
+
+;; =========================
+;; WINDOWS
+;; =========================
+(defwidget topbar []
+  (centerbox :class "bar"
+    (left-block)
+    (center-block)
+    (right-block)))
+
+(defwindow topbar
+  :monitor 0
+  :geometry (geometry :x "0" :y "0" :width "100%" :height "30px" :anchor "top center")
+  :stacking "fg"
+  :reserve (struts :side "top" :distance "30px")
+  (topbar))
+
+;; Power menu popup
+(defwidget powermenu []
+  (box :class "powermenu" :spacing 12 :valign "center" :halign "center"
+    (button :class "pm" :onclick "hyprlock" (label :text "Lock"))
+    (button :class "pm" :onclick "hyprctl dispatch exit 0" (label :text "Logout"))
+    (button :class "pm" :onclick "systemctl reboot" (label :text "Reboot"))
+    (button :class "pm danger" :onclick "systemctl poweroff" (label :text "Poweroff"))
+    (button :class "pm" :onclick "eww update show_powermenu=false" (label :text "Cancel"))))
+
+(defwindow powermenu
+  :monitor 0
+  :anchor "top right"
+  :geometry (geometry :x "-12px" :y "36px" :width "380px" :height "52px")
+  :stacking "fg"
+  :exclusive true
+  :visible show_powermenu
+  (powermenu))
+
