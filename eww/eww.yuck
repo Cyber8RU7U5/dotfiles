@@ -9,6 +9,7 @@
 
 (deflisten cpu_vals "bash ~/.config/eww/scripts/cpu_stream.sh")
 (deflisten mem_vals "bash ~/.config/eww/scripts/mem_stream.sh")
+(deflisten ws_list "bash ~/.config/eww/scripts/ws_list.sh")
 
 ;; Up/Down bandwidth (kbps) history, space-separated 60 samples each second
 (deflisten net_up_vals   "bash ~/.config/eww/scripts/net_stream.sh up values")
@@ -45,11 +46,15 @@
 
 (defwidget workspaces []
   (box :class "workspaces" :spacing 6
-    (for i (range 1 6)
-      (button
-        :class { "ws " + (i == active_ws ? "active" : "") }
-        :onclick `hyprctl dispatch workspace ${i}`
-        {i}))))
+    (for i ws_list
+      (button :class "ws active"
+              :visible (= i active_ws)
+              :onclick (str "hyprctl dispatch workspace " i)
+              (label :text (str i)))
+      (button :class "ws"
+              :visible (not (= i active_ws))
+              :onclick (str "hyprctl dispatch workspace " i)
+              (label :text (str i))))))
 
 (defwidget left-block []
   (box :halign "start" :valign "center" :spacing 12
