@@ -1,0 +1,15 @@
+.notification {
+  background-color: rgba(20, 20, 20, 0.9);
+  border-radius: 12px;
+  padding: 8px;
+  color: #ddd;
+  font-family: "JetBrains Mono";
+}
+.notification .summary {
+  font-weight: bold;
+  color: #c79900; /* gold */
+}
+.notification .body {
+  color: #bbb;
+}
+

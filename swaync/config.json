@@ -1,0 +1,11 @@
+{
+  "position": "top-right",
+  "layer": "top",
+  "notification-icon-size": 48,
+  "timeout": 5000,
+  "keyboard-shortcuts": {
+    "close-all": "Ctrl+Shift+c",
+    "close-latest": "Ctrl+Shift+x",
+    "open-notification-center": "Super+n"
+  }
+}
