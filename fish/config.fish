@@ -4,5 +4,5 @@ if status is-interactive
     source ~/.config/fish/alias.fish
 end
 
-# Created by `pipx` on 2025-07-25 15:24:13
-set PATH $PATH /home/user/.local/bin
+set PATH $PATH /home/$(whoami)/.config/puppet/applications
+set PATH $PATH /home/$(whoami)/.local/bin
