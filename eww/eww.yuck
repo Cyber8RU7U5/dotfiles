@@ -49,7 +49,7 @@
       (button
         :class { "ws " + (i == active_ws ? "active" : "") }
         :onclick `hyprctl dispatch workspace ${i}`
-        {i})))
+        {i}))))
 
 (defwidget left-block []
   (box :halign "start" :valign "center" :spacing 12
