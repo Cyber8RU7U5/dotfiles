@@ -9,7 +9,9 @@
 
 (deflisten cpu_vals "bash ~/.config/eww/scripts/cpu_stream.sh")
 (deflisten mem_vals "bash ~/.config/eww/scripts/mem_stream.sh")
-(deflisten ws_list "bash ~/.config/eww/scripts/ws_list.sh")
+(deflisten workspaces :initial "[]" "bash ~/.config/eww/scripts/get-workspaces")
+(deflisten current_workspace :initial "1" "bash ~/.config/eww/scripts/get-active-workspace")
+
 
 ;; Up/Down bandwidth (kbps) history, space-separated 60 samples each second
 (deflisten net_up_vals   "bash ~/.config/eww/scripts/net_stream.sh up values")
@@ -46,11 +48,12 @@
 
 (defwidget workspaces []
   (box :class "workspaces" :spacing 6
-    (for i ws_list
+    (for ws in workspaces
       (button
-        :class (if (= i active_ws) "ws active" "ws")
-        :onclick (str "hyprctl dispatch workspace " i)
-        (label :text (str i))))))
+        :class { "ws " + (ws.id == current_workspace ? "active" : "") }
+        :tooltip {ws.lastwindowtitle ?? ""}
+        :onclick `hyprctl dispatch workspace ${ws.id}`
+        {ws.id}))))
 
 (defwidget left-block []
   (box :halign "start" :valign "center" :spacing 12

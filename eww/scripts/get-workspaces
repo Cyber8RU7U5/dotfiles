@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+spaces() {
+  # ids + last window title (best-effort)
+  WS_JSON=$(hyprctl -j workspaces)
+  CLIENTS=$(hyprctl -j clients)
+
+  echo "$WS_JSON" | jq --argjson C "$CLIENTS" '
+    sort_by(.id)
+    | map({
+        id: .id,
+        windows: .windows,
+        lastwindow: (
+          $C
+          | map(select(.workspace.id == .id)) as $w
+          | ($w | last // {} ) .address
+        ),
+        lastwindowtitle: (
+          $C
+          | map(select(.workspace.id == .id)) as $w
+          | ($w | last // {} ) .title // ""
+        )
+      })'
+}
+
+spaces
+socat -u UNIX-CONNECT:$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock - | while read -r _; do
+  spaces
+done
+
