@@ -88,7 +88,8 @@
               :onright "bash ~/.config/eww/scripts/vpn.sh menu"
               :class "vpn")
     ;; Battery
-    (label :class "battery" :text (str battery_pct \"%\") :tooltip "Battery")
+    (label :class "battery" :text (str battery_pct "%") :tooltip "Battery")
+
 
     ;; Graphs (60s)
     (box :class "graphs" :spacing 8
