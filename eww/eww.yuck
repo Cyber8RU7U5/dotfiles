@@ -45,7 +45,7 @@
 
 (defwidget workspaces []
   (box :class "workspaces" :spacing 6
-    (for i in (range 1 6)
+    (for i (range 1 6)
       (if (= i active_ws)
         (button :class "ws active"
                 :onclick (str "hyprctl dispatch workspace " i)
@@ -60,8 +60,10 @@
             :onclick "wofi --show drun"
             (image :path "~/.config/media/orobas-logo.png" :height 20))
     (label :class "nowplaying"
-           :text media_or_title
-           :tooltip date_text)))
+       :text media_or_title
+       :limit-width 60
+       :ellipsize "end"
+       :tooltip date_text)))
 
 (defwidget center-block []
   (box :halign "center" :valign "center" (workspaces)))
@@ -96,7 +98,8 @@
       (box :class "g" (graph60 :vals cpu_vals :min 0 :max 100 :w 80) (label :class "g-lbl" :text "CPU"))
       (box :class "g" (graph60 :vals mem_vals :min 0 :max 100 :w 80) (label :class "g-lbl" :text "MEM"))
 (box :class "g" (graph60 :vals net_up_vals   :min 10000 :max net_up_max   :w 90) (label :class "g-lbl" :text "UP"))
-(box :class "g" (graph60 :vals net_down_vals :min 10000 :max net_down_max :w 90) (label :class "g-lbl" :text "DOWN"))
+(box :class "g" (graph60 :vals net_down_vals :min 10000 :max net_down_max :w 90) (label :class "g-lbl" :text "DOWN")))
+))
 
 ;; =========================
 ;; WINDOWS
