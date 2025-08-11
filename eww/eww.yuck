@@ -46,9 +46,13 @@
 (defwidget workspaces []
   (box :class "workspaces" :spacing 6
     (for i in (range 1 6)
-      (button :class (str "ws " (if (= i active_ws) "active" ""))
-              :onclick (str "hyprctl dispatch workspace " i)
-              (label :text (str i))))))
+      (if (= i active_ws)
+        (button :class "ws active"
+                :onclick (str "hyprctl dispatch workspace " i)
+                (label :text (str i)))
+        (button :class "ws"
+                :onclick (str "hyprctl dispatch workspace " i)
+                (label :text (str i)))))))
 
 (defwidget left-block []
   (box :halign "start" :valign "center" :spacing 12

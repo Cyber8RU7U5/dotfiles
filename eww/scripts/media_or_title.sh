@@ -4,7 +4,7 @@ if playerctl status >/dev/null 2>&1; then
   status=$(playerctl status 2>/dev/null)
   if [ "$status" = "Playing" ]; then
     artist=$(playerctl metadata artist 2>/dev/null)
-    title=$(playerctl metadata title 2>/devnull)
+    title=$(playerctl metadata title 2>/dev/null)
     out="${artist:+$artist - }${title}"
     [ -n "$out" ] && {
       echo "$out"
