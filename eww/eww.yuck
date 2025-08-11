@@ -77,17 +77,17 @@
               :onleft "eww update show_powermenu=true"
               :onright "")
     ;; Wi-Fi
-    (icon-btn :icon wifi_status :tooltip "Wi-Fi (LMB toggle, RMB editor)"
+    (icon-btn :icon "ᯤ" :tooltip "Wi-Fi (LMB toggle, RMB editor)"
               :onleft "bash ~/.config/eww/scripts/nm_wifi.sh toggle"
               :onright "nm-connection-editor"
               :class "wifi")
     ;; Bluetooth
-    (icon-btn :icon bt_status :tooltip "Bluetooth (LMB toggle, RMB manager)"
+    (icon-btn :icon "›ᛒ" :tooltip "Bluetooth (LMB toggle, RMB manager)"
               :onleft "bash ~/.config/eww/scripts/bluetooth.sh toggle"
               :onright "blueman-manager"
               :class "bt")
     ;; VPN
-    (icon-btn :icon vpn_status :tooltip "VPN (LMB toggle default, RMB list)"
+    (icon-btn :icon "🗝" :tooltip "VPN (LMB toggle default, RMB list)"
               :onleft "bash ~/.config/eww/scripts/vpn.sh toggle"
               :onright "bash ~/.config/eww/scripts/vpn.sh menu"
               :class "vpn")
