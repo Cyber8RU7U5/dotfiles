@@ -30,11 +30,12 @@ $crust: #11111b;
 * {
   all: unset;
   font-family: "SpaceMono Nerd Font", monospace;
-  font-size: 12;
+  font-size: 15;
 }
 
 window {
-  background-color: $base;
+  background: #222;
+  background: linear-gradient(90deg, rgba(20, 20, 20, 0) 0%, rgba(59, 59, 59, 1) 20%, rgba(59, 59, 59, 1) 80%, rgba(20, 20, 20, 0) 100%);
   border-bottom: 1px outset $border;
 }
 
@@ -76,7 +77,6 @@ window {
 
 .battery, .time, .date .tray .speakers .mic .wifi {
   color: $text;
-  font-size: 10px;
 }
 
 .battery {
@@ -107,7 +107,10 @@ window {
 }
 
 .tray image {
-   -gtk-icon-transform: scale(0.5); 
+  -gtk-icon-transform: scale(1); 
+  -gtk-icon-effect: highlight;
+  color: #fff;
+  -gtk-icon-shadow: 0 1px rgba(0,0,0,0.7);
   }
 
 

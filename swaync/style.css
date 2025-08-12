@@ -1,15 +1,18 @@
 .notification {
-  background-color: rgba(20, 20, 20, 0.9);
+  background-color: rgba(20, 20, 20, 0.6);
+  background: #222;
+  background: linear-gradient(180deg, rgba(34, 34, 34, 1) 0%, rgba(59, 59, 59, 0.5) 70%);
   border-radius: 12px;
-  padding: 8px;
+  border: 2px solid rgba(0,0,0,0.3);
+  padding: 3px;
   color: #ddd;
-  font-family: "JetBrains Mono";
+  font-family: "SpaceMono Nerd Font", monospace;
 }
 .notification .summary {
   font-weight: bold;
-  color: #c79900; /* gold */
+  color: #FFF; /* gold */
 }
 .notification .body {
-  color: #bbb;
+  color: #AAA;
 }
 
