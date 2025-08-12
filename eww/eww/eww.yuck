@@ -9,7 +9,7 @@
                :focusable false
   (bar0 :monitor "eDP-1"))
 (defwindow win1 :monitor 1
-               :geometry (geometry :x 0 :y 0 :height "15px" :width "100.01%" :anchor "center top")
+               :geometry (geometry :x "0px" :y "0px" :height "15px" :width "100.01%" :anchor "center top")
                :stacking "fg" 
                :exclusive true
                :focusable false

@@ -28,10 +28,15 @@ $crust: #11111b;
 
 * {
   all: unset;
+  font-family: "SpaceMono Nerd Font", monospace;
+  font-size: 12;
 }
 
 window {
-  font-family: "NotoSans Nerd Font", sans-serif;
+  //font-family: "Rubik";
+  //src: url("/usr/share/fonts/Rubik/static/Rubik-Regular.ttf" format("ttf"))
+  //font-weight: normal;
+  //font-style: normal;
   background-color: $base;
 }
 
