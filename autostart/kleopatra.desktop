@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Kleopatra
+Exec=kleopatra
+X-GNOME-Autostart-enabled=true
+OnlyShowIn=UWSM;

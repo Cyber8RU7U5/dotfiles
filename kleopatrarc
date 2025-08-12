@@ -1,0 +1,12 @@
+[DN]
+AttributeOrder=CN,L,_X_,OU,O,C
+
+[Self-Test]
+last-selftest-version=1
+
+[Tooltip]
+show-certificate-details=true
+show-owner-information=true
+
+[UiSettings]
+ColorScheme=Breeze Dark
