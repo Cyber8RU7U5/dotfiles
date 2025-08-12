@@ -21,7 +21,8 @@ $overlay0: #6c7086;
 $surface2: #585b70;
 $surface1: #45475a;
 $surface0: #313244;
-$base: #1e1e2e;
+$base: #222;
+$border: #444;
 $mantle: #181825;
 $crust: #11111b;
 
@@ -33,11 +34,8 @@ $crust: #11111b;
 }
 
 window {
-  //font-family: "Rubik";
-  //src: url("/usr/share/fonts/Rubik/static/Rubik-Regular.ttf" format("ttf"))
-  //font-weight: normal;
-  //font-style: normal;
   background-color: $base;
+  border-bottom: 1px outset $border;
 }
 
 .workspace {
